@@ -1,6 +1,6 @@
 # 🚀 Full-Stack Personal Portfolio Project
 
-A comprehensive, full-stack personal portfolio application built to showcase modern responsive web design integration with an enterprise-grade backend infrastructure. This project serves as a milestone submission for the engineering internship track, demonstrating clean folder architecture, environment security compliance, and dynamic server routing.
+A comprehensive, full-stack personal portfolio application built to showcase modern responsive web design integration with an enterprise-grade backend infrastructure. This project serves as a milestone submission for the MY MCA  internship track, demonstrating clean folder architecture, environment security compliance, and dynamic server routing.
 
 ---
 
