@@ -44,6 +44,42 @@ portfolio/
 └── README.md               # Technical project documentation and deployment guide
 ---
 
+### Advanced Network Firewall Optimization
+During deployment over mobile hotspot connections, database traffic querying cloud servers over standard paths frequently faces carrier-level blocks, causing MongooseServerSelectionError exceptions.
+
+To overcome this constraint without reverting to local mock database solutions, this application utilizes an explicit Standard Shard Array Connection Layout via standard web protocols. By explicitly addressing individual cluster nodes, the app forces a steady data line through restrictive mobile carrier firewalls, ensuring full backend connectivity from cellular networks.
+
+📋 API Endpoint Reference
+1. Submit Contact Message
+Endpoint: /api/contact
+
+Method: POST
+
+Content-Type: application/json
+
+Request Payload Schema:
+
+JSON
+{
+  "name": "String (Required)",
+  "email": "String (Required, Auto-sanitized to lowercase)",
+  "subject": "String (Optional, Defaults to 'No Subject')",
+  "message": "String (Required)"
+}
+Success Response: 201 Created — {"success": true, "message": "Message sent successfully!"}
+
+📦 Database Schema Structure
+Document items are strictly validated on the server using Mongoose schemas before database insertion occurs:
+
+### JavaScript
+const messageSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    subject: { type: String, default: 'No Subject' },
+    message: { type: String, required: true },
+    sentAt: { type: Date, default: Date.now }
+});
+
 ## ⚙️ Environment Configuration
 
 This project uses standard full-stack environment configurations to separate confidential connection parameters from the public codebase. 
@@ -52,18 +88,28 @@ This project uses standard full-stack environment configurations to separate con
 * **`.env`**: Contains production keys, port details, and sensitive MongoDB connection strings. This file is explicitly blocked by our `.gitignore` policy and is kept exclusively on the local development machine to prevent accidental exposure of system credentials to public repositories.
 * **`.env.example`**: A public template file that serves as a deployment guide for external evaluators. It outlines the structural keys required to execute the server without revealing live database passwords.
 
-### 🚀 Local Setup Instructions
+### Local Setup Instructions
 To initialize the backend environment on your local machine, complete the following steps:
 
-1. Duplicate the template configuration file in the project workspace:
-```bash
-   cp .env.example .env
-   PORT=5000
-   MONGODB_URI=mongodb+srv://<your-username>:<your-password>@cluster0.example.mongodb.net/portfolioDB
-
-
-*** Initialize the development environment or execute the server entry point directly
+1. Navigate into the isolated backend directory:
 
 Bash
-   cd server
-   node server.js
+cd server
+
+2. Install required system dependencies:
+
+Bash
+npm install
+
+3. Initialize your environment file configuration parameters:
+
+Bash
+# Create a .env file inside your /server directory using this template format:
+
+PORT=5000
+MONGODB_URI=mongodb://<username>:<password>@cluster0-shard-00-00.qhtxful.mongodb.net:27017,cluster0-shard-00-01.qhtxful.mongodb.net:27017,cluster0-shard-00-02.qhtxful.mongodb.net:27017/portfolioDB?ssl=true&replicaSet=atlas-qhtxful-shard-0&authSource=admin&retryWrites=true&w=majority
+
+4. Execute the server entry point directly:
+
+Bash
+node server.js
