@@ -18,6 +18,9 @@ The application is split cleanly into a static client workspace and an isolated 
 * **Express.js:** Lightweight routing framework providing robust endpoint monitoring and client-to-server data mapping.
 * **Dotenv:** Secure runtime configuration loader managing system ports and local database environment variables.
 
+### 🗄️ Database Layer (Cloud)
+* **MongoDB Atlas:** Multi-node replica set cloud cluster configured to receive, parse, and store inbound client messages permanently.
+
 ---
 
 ## 📂 Project Directory Breakdown
